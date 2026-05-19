@@ -1,0 +1,130 @@
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+# ==================================================================================
+#  KEYMAP.TOML
+# ==================================================================================
+
+[mgr]
+keymap = [
+	# --- Core Essentials ---
+	{ on = "<Esc>", run = "escape",             desc = "Exit visual mode / Clear selection" },
+	{ on = "q",     run = "quit",               desc = "Quit Yazi" },
+	{ on = "Q",     run = "quit --no-cwd-file", desc = "Quit without changint CWD" },
+	{ on = "<C-c>", run = "close",              desc = "Close tab / Quit" },
+	{ on = "<C-z>", run = "suspend",            desc = "Suspend process" },
+
+	# --- Navigation (Vim Style) ---
+	{ on = "k", run = "arrow -1", desc = "Up" },
+	{ on = "j", run = "arrow 1",  desc = "Down" },
+	{ on = "h", run = "leave",    desc = "Parent directory" },
+	{ on = "l", run = "enter",    desc = "Enter directory / Open file" },
+	
+	# --- Seeking / Page Movement ---
+	{ on = "<C-u>", run = "arrow -50%", desc = "Up half page" },
+	{ on = "<C-d>", run = "arrow 50%",  desc = "Down half page" },
+	{ on = "gg",    run = "arrow top",  desc = "Go to top" },
+	{ on = "G",     run = "arrow bot",  desc = "Go to bottom" },
+
+	# --- Smart Selection ---
+	{ on = "<Space>", run = [ "toggle", "arrow 1" ], desc = "Select & move down" },
+	{ on = "v",       run = "visual_mode",           desc = "Visual Mode" },
+	{ on = "<C-a>",   run = "toggle_all --state=on", desc = "Select ALL" },
+	{ on = "<C-r>",   run = "toggle_all",            desc = "Invert Selection" },
+
+	# --- File Operations (The Power User Stuff) ---
+	{ on = "o",      run = "open",                    desc = "Open" },
+	{ on = "O",      run = "open --interactive",      desc = "Open with..." },
+	{ on = "<Enter>", run = "open",                   desc = "Open" },
+	
+	# Clipboard Operations (Yank/Paste/Cut)
+	{ on = "y", run = "yank",       desc = "Copy (Yank)" },
+	{ on = "x", run = "yank --cut", desc = "Cut" },
+	{ on = "p", run = "paste",      desc = "Paste" },
+	{ on = "P", run = "paste --force", desc = "Paste (Overwrite)" },
+	
+	# Deletion
+	{ on = "d", run = "remove",             desc = "Trash file" },
+	{ on = "D", run = "remove --permanently", desc = "PERMANENTLY Delete" },
+
+	# Creation & Renaming
+	{ on = "a", run = "create",                   desc = "Create file/dir (ends with /)" },
+	{ on = "r", run = "rename --cursor=before_ext", desc = "Rename" },
+
+	# --- Power Tools ---
+	# Shell Access (Floating Terminal)
+	{ on = ";", run = "shell --interactive", desc = "Run Shell Command" },
+	{ on = ":", run = "shell --block --interactive", desc = "Run Blocking Command" },
+	
+	# Zoxide (Smart Jump)
+	{ on = "z", run = "plugin zoxide", desc = "Jump with Zoxide" },
+	
+	# FZF (Fuzzy Find in current dir)
+	{ on = "f", run = "plugin fzf", desc = "Fuzzy Find Here" },
+
+	# Search
+	{ on = "s",     run = "search --via=fd", desc = "Search filenames (fd)" },
+	{ on = "S",     run = "search --via=rg", desc = "Search content (ripgrep)" },
+	{ on = "<C-s>", run = "escape --search", desc = "Cancel Search" },
+
+	# --- Tabs (Browser Style) ---
+	{ on = "t", run = "tab_create --current", desc = "New Tab (Current Dir)" },
+	{ on = "1", run = "tab_switch 0", desc = "Tab 1" },
+	{ on = "2", run = "tab_switch 1", desc = "Tab 2" },
+	{ on = "3", run = "tab_switch 2", desc = "Tab 3" },
+	{ on = "[", run = "tab_switch -1 --relative", desc = "Prev Tab" },
+	{ on = "]", run = "tab_switch 1 --relative",  desc = "Next Tab" },
+
+	# --- Sorting & Filtering ---
+	{ on = [ ",", "m" ], run = "sort mtime --reverse=yes", desc = "Sort by Modified" },
+	{ on = [ ",", "s" ], run = "sort size --reverse=yes",  desc = "Sort by Size" },
+	{ on = [ ",", "a" ], run = "sort alphabetical",        desc = "Sort Alphabetical" },
+	{ on = ".",          run = "hidden toggle",            desc = "Toggle Hidden Files" },
+
+	# --- Copy Paths (Dev Tools) ---
+	{ on = [ "c", "c" ], run = "copy path",     desc = "Copy Full Path" },
+	{ on = [ "c", "f" ], run = "copy filename", desc = "Copy Filename" },
+
+	# --- Help ---
+	{ on = "~", run = "help", desc = "Open Help" }
+]
+
+[input]
+prepend_keymap = [
+	# Re-bind the core backspace command
+	{ on = [ "<Backspace>" ], run = "backspace", desc = "Delete character before cursor" },
+	{ on = [ "<C-h>" ],       run = "backspace", desc = "Delete character before cursor" },
+
+	# Your custom Emacs/Readline Style Editing
+	{ on = [ "<C-u>" ], run = "kill bol",      desc = "Clear to start" },
+	{ on = [ "<C-k>" ], run = "kill eol",      desc = "Clear to end" },
+	{ on = [ "<C-w>" ], run = "kill backward", desc = "Delete word back" },
+	
+	# Your custom Arrow Keys
+	{ on = [ "<Left>" ],  run = "move -1", desc = "Move cursor left" },
+	{ on = [ "<Right>" ], run = "move 1",  desc = "Move cursor right" }
+]
+
+
+[confirm]
+keymap = [
+	{ on = "<Esc>",   run = "close",          desc = "Cancel" },
+	{ on = "n",       run = "close",          desc = "No" },
+	{ on = "y",       run = "close --submit", desc = "Yes" },
+	{ on = "<Enter>", run = "close --submit", desc = "Confirm" }
+]
+
+[completion]
+keymap = [
+	{ on = "<Tab>",   run = "close --submit", desc = "Complete" },
+	{ on = "<Enter>", run = "close --submit", desc = "Complete" },
+	{ on = "<C-k>",   run = "arrow prev",     desc = "Prev" },
+	{ on = "<C-j>",   run = "arrow next",     desc = "Next" }
+]
+
+[help]
+keymap = [
+	{ on = "<Esc>", run = "escape", desc = "Close help" },
+	{ on = "q",     run = "close",  desc = "Close help" },
+	{ on = "k",     run = "arrow -1", desc = "Up" },
+	{ on = "j",     run = "arrow 1",  desc = "Down" }
+]

@@ -1,0 +1,28 @@
+[general]
+mode = normal
+framerate = 144
+sensitivity = 100
+bars = 0
+bar_width = 2
+bar_spacing = 1
+
+[input]
+method = fifo
+source = /tmp/mpd.fifo
+
+[output]
+method = ncurses
+style = stereo
+background = 'default'
+
+[color]
+gradient = 1
+gradient_count = 3
+# Deep Red -> Bright Red -> White Hot
+gradient_color_1 = '#550000'
+gradient_color_2 = '#ff0000'
+gradient_color_3 = '#ffffff'
+
+[smoothing]
+monstercat = 1
+gravity = 110

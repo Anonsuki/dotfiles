@@ -1,0 +1,2 @@
+require("no-status"):setup()
+
